@@ -1,8 +1,8 @@
-package com.ysj.sogong.local.member.controller;
+package com.ysj.sogong.domain.member.controller;
 
-import com.ysj.sogong.local.member.entity.Member;
-import com.ysj.sogong.local.member.repository.MemberRepository;
-import com.ysj.sogong.local.member.service.MemberService;
+import com.ysj.sogong.domain.member.entity.Member;
+import com.ysj.sogong.domain.member.repository.MemberRepository;
+import com.ysj.sogong.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;

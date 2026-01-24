@@ -1,4 +1,4 @@
-package com.ysj.sogong.local.member.entity;
+package com.ysj.sogong.domain.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

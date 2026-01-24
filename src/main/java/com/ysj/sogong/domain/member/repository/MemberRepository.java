@@ -1,6 +1,6 @@
-package com.ysj.sogong.local.member.repository;
+package com.ysj.sogong.domain.member.repository;
 
-import com.ysj.sogong.local.member.entity.Member;
+import com.ysj.sogong.domain.member.entity.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
