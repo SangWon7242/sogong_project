@@ -62,3 +62,8 @@
 (MemberDto 관련 수정 커밋)
 - MemberDto 생성자 매소드 추가
 - createMember 매소드 수정
+
+(DB 분리 커밋)
+- h2 DB를 적용
+- dev, test 모드일 때는 h2를 이용하고 prod 모드일 때는 mariaDB 이용
+- dev, prod 모드는 데이터 영구 저장, test 모드는 임시 저장
