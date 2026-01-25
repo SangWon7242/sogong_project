@@ -1,6 +1,5 @@
 package com.ysj.sogong.global.config.security;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,9 +17,14 @@ public class SecurityConfig
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
+        .csrf(csrf -> csrf
+            .ignoringRequestMatchers("/h2-console/**")) // h2 콘솔 scrf 제외
+        .headers(headers -> headers
+            .frameOptions(frame -> frame.sameOrigin())) // h2 콘솔 iFrame 허용
         .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-            .requestMatchers("/.well-known/**", "/error").permitAll() // Chrome DevTools 경로 허용
+            .requestMatchers("/.well-known/**").permitAll() // Chrome DevTools 경로 허용
             .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/gen/**", "/member/profile/img/**").permitAll() // 정적 리소스 허용
+            .requestMatchers("/error", "/h2-console/**").permitAll() // 기타 경로 허용
             .requestMatchers("/member/join", "/member/login", "/home").permitAll()
             .anyRequest().authenticated())
         .formLogin(form -> form

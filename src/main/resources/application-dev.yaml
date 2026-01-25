@@ -1,12 +1,12 @@
 spring:
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
-    username: root
+    url: jdbc:h2:./db_dev;MODE=MySQL
+    username: sa
     password:
+    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create # DB 테이블 자동생성
+      ddl-auto: update # DB 테이블 자동생성
 
 server:
   port: 8080

@@ -45,6 +45,9 @@ dependencies {
 
 	// DB (mariaDB)
 	runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
+
+	// DB (h2)
+	runtimeOnly("com.h2database:h2")
 }
 
 tasks.withType<Test> {

@@ -1,7 +1,6 @@
 package com.ysj.sogong.domain.member.controller;
 
 import com.ysj.sogong.domain.member.dto.MemberDto;
-import com.ysj.sogong.domain.member.entity.Member;
 import com.ysj.sogong.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
