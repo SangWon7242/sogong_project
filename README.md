@@ -58,3 +58,7 @@
 (테스트 데이터 문제 해결 커밋)
 - 테스트 데이터의 비밀번호가 이중 암호화되는 문제 해결
 - SecurityConfig 클래스에서 다양한 상황에 대한 대처 능력 강화
+
+(MemberDto 관련 수정 커밋)
+- MemberDto 생성자 매소드 추가
+- createMember 매소드 수정
