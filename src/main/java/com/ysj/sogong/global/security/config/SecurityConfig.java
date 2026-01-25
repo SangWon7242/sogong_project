@@ -1,4 +1,4 @@
-package com.ysj.sogong.global.config.security;
+package com.ysj.sogong.global.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

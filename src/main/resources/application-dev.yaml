@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: update # DB 테이블 자동생성
+      ddl-auto: update
 
 server:
   port: 8080

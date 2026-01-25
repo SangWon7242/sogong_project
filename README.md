@@ -67,3 +67,9 @@
 - h2 DB를 적용
 - dev, test 모드일 때는 h2를 이용하고 prod 모드일 때는 mariaDB 이용
 - dev, prod 모드는 데이터 영구 저장, test 모드는 임시 저장
+
+(마이페이지 수정 커밋)
+- SecurityService 클래스 생성 및 MemberService에 있던 loadUserByUsername 매소드를 가져옴
+- LoginedMember 클래스 생성
+- LoginedMember 클래스를 이용해 로그인한 회원의 정보를 저장함
+- "/member/myPage" 경로로 접속시 비밀번호가 노출되는 문제 해결

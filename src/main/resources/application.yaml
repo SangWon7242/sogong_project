@@ -22,7 +22,7 @@ spring:
       path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: update # DB 테이블 자동생성
+      ddl-auto: update
 
 server:
   port: 8080
