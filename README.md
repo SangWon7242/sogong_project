@@ -73,3 +73,7 @@
 - LoginedMember 클래스 생성
 - LoginedMember 클래스를 이용해 로그인한 회원의 정보를 저장함
 - "/member/myPage" 경로로 접속시 비밀번호가 노출되는 문제 해결
+
+(기본 페이지 생성 커밋)
+- index.html 생성
+- 기본 경로를 "/home" 에서  "/"로 변경
