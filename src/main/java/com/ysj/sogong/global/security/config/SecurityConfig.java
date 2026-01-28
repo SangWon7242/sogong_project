@@ -1,7 +1,10 @@
 package com.ysj.sogong.global.security.config;
 
+import com.ysj.sogong.global.security.service.OAuth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +17,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig
 {
+  @Lazy
+  @Autowired
+  private OAuth2UserService oAuth2UserService;
+
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
@@ -32,9 +39,15 @@ public class SecurityConfig
             .loginProcessingUrl("/member/login") // POST (me -> security)
             .defaultSuccessUrl("/member/myPage") // GET
             .permitAll())
+        .oauth2Login(oAuth2 -> oAuth2
+            .loginPage("/member/login") // GET (/oauth2/authorization/kakao)
+            .defaultSuccessUrl("/member/myPage")
+            .userInfoEndpoint(userInfo -> userInfo
+                .userService(oAuth2UserService))
+            .permitAll())
         .logout(logout -> logout
             .logoutUrl("/member/logout") // POST (me -> security)
-            .logoutSuccessUrl("/home") // GET
+            .logoutSuccessUrl("/") // GET
             .invalidateHttpSession(true) // 세션 삭제
             .permitAll()
         );

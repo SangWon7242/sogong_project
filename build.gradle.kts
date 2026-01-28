@@ -48,6 +48,9 @@ dependencies {
 
 	// DB (h2)
 	runtimeOnly("com.h2database:h2")
+
+	// OAuth2
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 }
 
 tasks.withType<Test> {

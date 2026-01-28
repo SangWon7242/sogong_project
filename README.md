@@ -74,6 +74,20 @@
 - LoginedMember 클래스를 이용해 로그인한 회원의 정보를 저장함
 - "/member/myPage" 경로로 접속시 비밀번호가 노출되는 문제 해결
 
+# % 3주차
+## 회원(이용자) 관리 시스템 구축
+
 (기본 페이지 생성 커밋)
 - index.html 생성
 - 기본 경로를 "/home" 에서  "/"로 변경
+
+(카카오톡 로그인 구현 커밋)
+- OAuth2 적용
+- application.yaml에 OAuth2 관련 설정
+- application-secret.yaml에 REST API 키 설정 (커밋에는 안 올라감)
+- SecurityConfig에 OAuth2 기능 구현
+- OAuth2UserService 클래스에 loadUser 매소드 구현
+- LoginedMember에 OAuth2User를 상속하여 카카오 계정 정보를 로그인 정보에 포함
+- OAuth 타입 불일치와 member를 찾을 수 없을 때 사용할 exception 클래스 생성
+- 로그인 페이지에 카카오 로그인 링크 추가
+- 카카오 로그인시에 처음이면 자동으로 회원가입 후 로그인 기능 구현

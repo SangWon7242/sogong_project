@@ -26,4 +26,15 @@ public class MemberService
     MemberDto memberDto = new MemberDto(member);
     return memberDto;
   }
+
+  public MemberDto findMember(String username)
+  {
+    Member member = memberRepository.findByUsername(username);
+    if(member == null)
+    {
+      return null;
+    }
+
+    return new MemberDto(member);
+  }
 }

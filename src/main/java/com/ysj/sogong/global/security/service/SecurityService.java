@@ -1,7 +1,7 @@
 package com.ysj.sogong.global.security.service;
 
-import com.ysj.sogong.domain.member.entity.Member;
-import com.ysj.sogong.domain.member.repository.MemberRepository;
+import com.ysj.sogong.domain.member.dto.MemberDto;
+import com.ysj.sogong.domain.member.service.MemberService;
 import com.ysj.sogong.global.security.dto.LoginedMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,12 +18,12 @@ import java.util.List;
 @Service
 public class SecurityService implements UserDetailsService
 {
-  private final MemberRepository memberRepository;
+  private final MemberService memberService;
 
   @Override
   public UserDetails loadUserByUsername(String username)
   {
-    Member member = memberRepository.findByUsername(username);
+    MemberDto member = memberService.findMember(username);
     if (member == null)
     {
       throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
@@ -32,9 +32,12 @@ public class SecurityService implements UserDetailsService
     final String ADMIN_USERNAME = "admin";
     List<GrantedAuthority> authorities = new ArrayList<>();
 
-    if (username.equals(ADMIN_USERNAME)) {
+    if (username.equals(ADMIN_USERNAME))
+    {
       authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // 관리자 권한 부여
-    } else {
+    }
+    else
+    {
       authorities.add(new SimpleGrantedAuthority("ROLE_USER")); // 일반 사용자 권한 부여
     }
 
