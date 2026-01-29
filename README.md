@@ -120,3 +120,14 @@
 
 (보드 클래스 종류 추가 커밋)
 - InitBoardClass에서 공지사항 게시판의 종류를 표현할 보드 클래스를 추가
+  
+(Board 생성 커밋)
+- Board 엔티티 생성
+- BoardService 클래스 생성
+- BoardRepository 클래스 생성
+- BoardController 클래스 생성
+- 게시판 생성 페이지 생성
+- "/board/create" 경로로 접속시 게시판 생성 페이지로 전송
+- 게시판 생성 기능 구현
+- 게시판 상세보기 페이지 생성
+- 게시판 생성시 상세보기 페이지로 전송

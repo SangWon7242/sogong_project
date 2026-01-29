@@ -1,0 +1,12 @@
+<html layout:decorate="~{layout/layout.html}">
+<body>
+    <section layout:fragment="content">
+        <h1>board detail</h1>
+
+        <div th:text="|id: ${board.id}|"></div>
+        <div th:text="|username: ${board.username}|"></div>
+        <div th:text="|title: ${board.title}|"></div>
+        <div th:text="|boardClassId: ${board.boardClassId}|"></div>
+    </section>
+</body>
+</html>

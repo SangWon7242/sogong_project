@@ -5,6 +5,8 @@ import com.ysj.sogong.domain.board.boardClass.repository.BoardClassRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class BoardClassService
@@ -14,5 +16,10 @@ public class BoardClassService
   public BoardClass createBoardClass(BoardClass boardClass)
   {
     return boardClassRepository.save(boardClass);
+  }
+
+  public List<BoardClass> findBoardClassAll()
+  {
+    return boardClassRepository.findAll();
   }
 }

@@ -1,0 +1,18 @@
+<html layout:decorate="~{layout/layout.html}">
+<body>
+    <section layout:fragment="content">
+        <h1>board create</h1>
+
+        <form th:action="@{/board/create}" method="post">
+            <div>게시판 이름</div>
+            <input type="text" placeholder="제목" name="title">
+            <div>게시판 종류</div>
+            <select name="boardClassId">
+                <option th:each="boardClass : ${boardClasses}" th:value="${boardClass.id}" th:text="${boardClass.className}"></option>
+            </select>
+
+            <button type="submit">제출</button>
+        </form>
+    </section>
+</body>
+</html>
