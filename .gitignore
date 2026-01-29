@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ### Sping Boot ###
-application-secret.yaml
+src/main/resources/application-secret.yaml
 
 ### Custom ###
 db_dev.mv.db
