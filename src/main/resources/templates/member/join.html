@@ -1,10 +1,16 @@
-<div><h1>join</h1></div>
+<html layout:decorate="~{layout/layout.html}">
+<body>
+    <section layout:fragment="content">
+        <div><h1>join</h1></div>
 
-<form th:action="@{/member/join}" method="post">
-    <div>이름</div>
-    <input type="text" placeholder="이름" name="username">
-    <div>비밀번호</div>
-    <input type="password" placeholder="비밀번호" name="password">
+        <form th:action="@{/member/join}" method="post">
+            <div>이름</div>
+            <input type="text" placeholder="이름" name="username">
+            <div>비밀번호</div>
+            <input type="password" placeholder="비밀번호" name="password">
 
-    <button type="submit">제출</button>
-</form>
+            <button type="submit">제출</button>
+        </form>
+    </section>
+</body>
+</html>

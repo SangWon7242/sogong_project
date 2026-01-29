@@ -37,8 +37,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 	
-	// 타임리프
+	// 타임리프 + 레이아웃
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+	implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
 
 	// JPA
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")

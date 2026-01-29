@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequiredArgsConstructor
 @RequestMapping("/member")
@@ -26,12 +25,10 @@ public class MemberController
   }
 
   @PostMapping("/join")
-  @ResponseBody
-  public MemberDto doJoin(MemberDto memberForm)
+  public String doJoin(MemberDto memberForm)
   {
-    MemberDto member = memberService.createMember(memberForm);
-
-    return member;
+    memberService.createMember(memberForm);
+    return "/index";
   }
 
   @GetMapping("/login")
@@ -41,17 +38,9 @@ public class MemberController
   }
 
   @PreAuthorize("isAuthenticated()")
-  @GetMapping("/logout")
-  public String showLogout()
-  {
-    return "/member/logout";
-  }
-
-  @PreAuthorize("isAuthenticated()")
   @GetMapping("/myPage")
-  @ResponseBody
-  public LoginedMember myPage(@AuthenticationPrincipal LoginedMember member)
+  public String myPage(@AuthenticationPrincipal LoginedMember member)
   {
-    return member;
+    return "/member/myPage";
   }
 }
