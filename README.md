@@ -107,3 +107,9 @@
 (오류 수정 커밋)
 - 깃허브에 올라간 application-secret.yaml 파일 삭제
 - .gitignore 수정
+
+(BoardClass 생성 커밋)
+- BoardClass 엔티티 생성
+- BoardClassService 클래스 생성
+- BoardClassRepository 클래스 생성
+- InitBoardClass 클래스를 생성하여 프로그램 시작시 자동으로 데이터 생성 및 저장

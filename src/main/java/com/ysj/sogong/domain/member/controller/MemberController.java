@@ -2,10 +2,8 @@ package com.ysj.sogong.domain.member.controller;
 
 import com.ysj.sogong.domain.member.dto.MemberDto;
 import com.ysj.sogong.domain.member.service.MemberService;
-import com.ysj.sogong.global.security.dto.LoginedMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +37,7 @@ public class MemberController
 
   @PreAuthorize("isAuthenticated()")
   @GetMapping("/myPage")
-  public String myPage(@AuthenticationPrincipal LoginedMember member)
+  public String myPage()
   {
     return "/member/myPage";
   }

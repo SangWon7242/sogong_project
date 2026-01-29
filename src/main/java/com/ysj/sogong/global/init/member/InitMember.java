@@ -1,4 +1,4 @@
-package com.ysj.sogong.global.test.data;
+package com.ysj.sogong.global.init.member;
 
 import com.ysj.sogong.domain.member.dto.MemberDto;
 import com.ysj.sogong.domain.member.service.MemberService;
@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Profile;
 
 @Profile("test")
 @Configuration
-public class InitData
+public class InitMember
 {
   @Bean
-  CommandLineRunner commandLineRunner(MemberService memberService)
+  CommandLineRunner commandLineRunnerMember(MemberService memberService)
   {
     return args -> {
       memberService.createMember(new MemberDto(1, "user1", "1234"));
