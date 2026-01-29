@@ -117,3 +117,6 @@
 (MemberDto 제거 커밋)
 - MemberDto 클래스 제거
 - MemberDto 자리에 Member로 변환
+
+(보드 클래스 종류 추가 커밋)
+- InitBoardClass에서 공지사항 게시판의 종류를 표현할 보드 클래스를 추가

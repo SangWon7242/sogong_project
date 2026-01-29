@@ -15,7 +15,12 @@ public class InitBoardClass
   CommandLineRunner commandLineRunnerBoardClass(BoardClassService boardClassService)
   {
     return args -> {
-      boardClassService.createBoardClass(new BoardClass("class1"));
+      boardClassService.createBoardClass(new BoardClass("일반공지"));
+      boardClassService.createBoardClass(new BoardClass("행사특강"));
+      boardClassService.createBoardClass(new BoardClass("학부학사공지"));
+      boardClassService.createBoardClass(new BoardClass("학생일반공지"));
+      boardClassService.createBoardClass(new BoardClass("onestop 공지사항"));
+      boardClassService.createBoardClass(new BoardClass("장학공지"));
     };
   }
 }
