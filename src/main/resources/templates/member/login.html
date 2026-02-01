@@ -1,20 +1,63 @@
 <html layout:decorate="~{layout/layout.html}">
-<body>
+  <body>
     <section layout:fragment="content">
-        <div><h1>login</h1></div>
+      <h1>login</h1>
 
-        <form th:action="@{/member/login}" method="post">
-            <div>이름</div>
-            <input type="text" placeholder="이름" name="username">
-            <div>비밀번호</div>
-            <input type="password" placeholder="비밀번호" name="password">
+      <form th:action="@{/member/login}"
+            method="post"
+            onsubmit="checkForm(this); return false;"
+            class="flex flex-col gap-2">
+        <div class="flex flex-col">
+          <label for="username">아이디</label>
+          <input type="text"
+                 name="username"
+                 id="username"
+                 placeholder="아이디"
+                 class="input"/>
+        </div>
+        <div class="flex flex-col">
+          <label for="password">비밀번호</label>
+          <input type="password"
+                 name="password"
+                 id="password"
+                 placeholder="비밀번호"
+                 class="input"/>
+        </div>
+        <div>
+          <button type="submit" class="btn">로그인</button>
+        </div>
+      </form>
 
-            <div>
-                <button type="submit" class="btn">로그인</button>
-            </div>
-        </form>
+      <a href="/oauth2/authorization/kakao" class="btn">카카오 로그인</a>
 
-        <a href="/oauth2/authorization/kakao" class="btn">카카오 로그인</a>
+      <script>
+        function checkForm(form)
+        {
+            // 아이디 확인
+            form.username.value = form.username.value.trim();
+            const username = form.username;
+
+            if (username.value === "")
+            {
+                alert("아이디를 입력해주세요.");
+                username.focus();
+                return;
+            }
+
+            // 비밀번호 확인
+            form.password.value = form.password.value.trim();
+            const password = form.password;
+
+            if (password.value === "")
+            {
+                alert("비밀번호를 입력해주세요.");
+                password.focus();
+                return;
+            }
+
+            form.submit();
+        }
+      </script>
     </section>
-</body>
+  </body>
 </html>
