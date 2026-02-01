@@ -1,18 +1,77 @@
 <html layout:decorate="~{layout/layout.html}">
-<body>
+  <body>
     <section layout:fragment="content">
-        <div><h1>join</h1></div>
+      <div><h1>join</h1></div>
 
-        <form th:action="@{/member/join}" method="post">
-            <div>이름</div>
-            <input type="text" placeholder="이름" name="username">
-            <div>비밀번호</div>
-            <input type="password" placeholder="비밀번호" name="password">
+      <form
+        onsubmit="
+          joinSubmitCheckForm(this);
+          return false;
+        "
+        class="flex flex-col gap-2"
+        th:action="@{/member/join}"
+        method="post"
+      >
+        <div class="flex flex-col">
+          <label for="username">이름</label>
+          <input class="input" type="text" placeholder="이름" name="username" />
+        </div>
+        <div class="flex flex-col">
+          <label for="password">비밀번호</label>
+          <input
+            class="input"
+            type="password"
+            placeholder="비밀번호"
+            name="password"
+          />
+        </div>
+        <div class="flex flex-col">
+          <label for="passwordConfirm">비밀번호 확인</label>
+          <input
+            class="input"
+            type="password"
+            placeholder="비밀번호 확인"
+            name="passwordConfirm"
+          />
+        </div>
+        <div>
+          <button type="submit" class="btn">제출</button>
+        </div>
+      </form>
 
-            <div>
-                <button type="submit" class="btn">제출</button>
-            </div>
-        </form>
+      <script>
+        function joinSubmitCheckForm(form) {
+          const username = form.username.value;
+          const password = form.password.value;
+          const passwordConfirm = form.passwordConfirm.value;
+
+          if (username === "") {
+            alert("이름을 입력해주세요.");
+            form.username.focus();
+            return;
+          }
+
+          if (password === "") {
+            alert("비밀번호를 입력해주세요.");
+            form.password.focus();
+            return;
+          }
+
+          if (passwordConfirm === "") {
+            alert("비밀번호 확인을 입력해주세요.");
+            form.passwordConfirm.focus();
+            return;
+          }
+
+          if (password !== passwordConfirm) {
+            alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+            form.passwordConfirm.focus();
+            return;
+          }
+
+          form.submit();
+        }
+      </script>
     </section>
-</body>
+  </body>
 </html>

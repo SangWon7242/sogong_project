@@ -1,18 +1,58 @@
 <html layout:decorate="~{layout/layout.html}">
-<body>
+  <body>
     <section layout:fragment="content">
-        <h1>board create</h1>
+      <h1>board create</h1>
 
-        <form th:action="@{/board/create}" method="post">
-            <div>게시판 이름</div>
-            <input type="text" placeholder="제목" name="title">
-            <div>게시판 종류</div>
-            <select name="boardClassId">
-                <option th:each="boardClass : ${boardClasses}" th:value="${boardClass.id}" th:text="${boardClass.className}"></option>
-            </select>
+      <form
+        onsubmit="
+          boardCreateSubmitCheckForm(this);
+          return false;
+        "
+        class="flex flex-col gap-2"
+        th:action="@{/board/create}"
+        method="post"
+      >
+        <div class="flex flex-col">
+          <label for="title">게시판 이름</label>
+          <input class="input" type="text" placeholder="제목" name="title" />
+        </div>
+        <div class="flex flex-col">
+          <label for="boardClassId">게시판 종류</label>
+          <select name="boardClassId" class="select">
+            <option value disabled selected>게시판 종류를 선택해주세요.</option>
+            <option
+              th:each="boardClass : ${boardClasses}"
+              th:value="${boardClass.id}"
+              th:text="${boardClass.className}"
+            ></option>
+          </select>
+        </div>
 
-            <button type="submit">제출</button>
-        </form>
+        <div>
+          <button type="submit" class="btn">제출</button>
+        </div>
+      </form>
+
+      <script>
+        function boardCreateSubmitCheckForm(form) {
+          const title = form.title.value;
+          const boardClassId = form.boardClassId.value;
+
+          if (title === "") {
+            alert("게시판 이름을 입력해주세요.");
+            form.title.focus();
+            return;
+          }
+
+          if (boardClassId === "") {
+            alert("게시판 종류를 선택해주세요.");
+            form.boardClassId.focus();
+            return;
+          }
+
+          form.submit();
+        }
+      </script>
     </section>
-</body>
+  </body>
 </html>
