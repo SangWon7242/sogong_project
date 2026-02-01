@@ -33,11 +33,6 @@ public class MemberService
 
   public Member findMember(String username)
   {
-    Member member = memberRepository.findByUsername(username);
-    if(member == null)
-    {
-      return null;
-    }
-    return member;
+    return memberRepository.findByUsername(username);
   }
 }

@@ -29,10 +29,21 @@ public class MemberController
   @PostMapping("/join")
   public String doJoin(@Valid MemberForm memberForm, BindingResult bindingResult, Model model)
   {
+    final String JOIN_FORM = "/member/join";
+    
+    // 값 입력 유무, 값의 길이 등의 유효성 판단
     if(bindingResult.hasErrors())
     {
       model.addAttribute("member", memberForm);
-      return "/member/join";
+      return JOIN_FORM;
+    }
+
+    // 아이디 중복 유효성 판단
+    Member findMember = memberService.findMember(memberForm.getUsername());
+    if(findMember != null)
+    {
+      model.addAttribute("member", memberForm);
+      return JOIN_FORM;
     }
 
     memberService.createMember(memberForm);
