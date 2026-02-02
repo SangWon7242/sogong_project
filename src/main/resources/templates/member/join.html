@@ -6,33 +6,32 @@
             <form th:action="@{/member/join}"
                   method="post"
                   onsubmit="checkForm(this); return false;"
+                  th:object="${memberForm}"
                   class="flex flex-col gap-2">
                 <div class="flex flex-col">
                     <label for="username">아이디</label>
                     <input type="text"
-                           name="username"
-                           id="username"
+                           th:field="*{username}"
                            placeholder="아아디"
-                           th:value="${member != null ? member.username : ''}"
                            class="input"/>
                 </div>
+                <div th:replace="~{error/error :: username}"></div>
                 <div class="flex flex-col">
                     <label for="password">비밀번호</label>
                     <input type="password"
-                           name="password"
-                           id="password"
+                           th:field="*{password}"
                            placeholder="비밀번호"
-                           th:value="${member != null ? member.password : ''}"
                            class="input"/>
                 </div>
+                <div th:replace="~{error/error :: password}"></div>
                 <div class="flex flex-col">
                     <label for="passwordConfirm">비밀번호 확인</label>
                     <input type="password"
-                           name="passwordConfirm"
-                           id="passwordConfirm"
+                           th:field="*{passwordConfirm}"
                            placeholder="비밀번호 확인"
                            class="input"/>
                 </div>
+                <div th:replace="~{error/error :: passwordConfirm}"></div>
                 <div>
                     <button type="submit" class="btn">제출</button>
                 </div>
@@ -41,38 +40,10 @@
             <script>
                 function checkForm(form)
                 {
-                    // 아이디 확인
+                    // 공백 처리
                     form.username.value = form.username.value.trim();
-                    const username = form.username;
-
-                    if (username.value === "")
-                    {
-                        alert("아이디를 입력해주세요.");
-                        username.focus();
-                        return;
-                    }
-
-                    // 비밀번호 확인
                     form.password.value = form.password.value.trim();
-                    const password = form.password;
-
-                    if (password.value === "")
-                    {
-                        alert("비밀번호를 입력해주세요.");
-                        password.focus();
-                        return;
-                    }
-
-                    // 확인 비밀번호 확인
                     form.passwordConfirm.value = form.passwordConfirm.value.trim();
-                    const passwordConfirm = form.passwordConfirm;
-
-                    if (passwordConfirm.value === "")
-                    {
-                        alert("확인 비밀번호를 입력해주세요.");
-                        passwordConfirm.focus();
-                        return;
-                    }
 
                     form.submit();
                 }

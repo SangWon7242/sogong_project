@@ -21,20 +21,26 @@ public class MemberController
   private final MemberService memberService;
 
   @GetMapping("/join")
-  public String showJoin()
+  public String showJoin(MemberForm memberForm)
   {
     return "/member/join";
   }
 
   @PostMapping("/join")
-  public String doJoin(@Valid MemberForm memberForm, BindingResult bindingResult, Model model)
+  public String doJoin(@Valid MemberForm memberForm, BindingResult bindingResult)
   {
     final String JOIN_FORM = "/member/join";
-    
+
     // 값 입력 유무, 값의 길이 등의 유효성 검사
     if(bindingResult.hasErrors())
     {
-      model.addAttribute("member", memberForm);
+      return JOIN_FORM;
+    }
+
+    // 비밀번호 확인 유효성 검사
+    if(!memberForm.getPassword().equals(memberForm.getPasswordConfirm()))
+    {
+      bindingResult.rejectValue("passwordConfirm", "Not_Confirmed", "비밀번호와 일치하지 않습니다");
       return JOIN_FORM;
     }
 
@@ -42,14 +48,7 @@ public class MemberController
     Member findMember = memberService.findMember(memberForm.getUsername());
     if(findMember != null)
     {
-      model.addAttribute("member", memberForm);
-      return JOIN_FORM;
-    }
-    
-    // 비밀번호 확인 유효성 검사
-    if(!memberForm.getPassword().equals(memberForm.getPasswordConfirm()))
-    {
-      model.addAttribute("member", memberForm);
+      bindingResult.rejectValue("username", "Overlap_Username", "이미 사용된 아이디입니다");
       return JOIN_FORM;
     }
 
