@@ -27,24 +27,25 @@ public class MemberController
   }
 
   @PostMapping("/join")
-  public String doJoin(@Valid MemberForm memberForm, BindingResult bindingResult)
+  public String doJoin(@Valid MemberForm memberForm, BindingResult bindingResult, Model model)
   {
     final String JOIN_FORM = "/member/join";
 
     // 값 입력 유무, 값의 길이 등의 유효성 검사
     if(bindingResult.hasErrors())
     {
+      // 모델 이용
       return JOIN_FORM;
     }
 
-    // 비밀번호 확인 유효성 검사
+    // 비밀번호 확인 검사
     if(!memberForm.getPassword().equals(memberForm.getPasswordConfirm()))
     {
       bindingResult.rejectValue("passwordConfirm", "Not_Confirmed", "비밀번호와 일치하지 않습니다");
       return JOIN_FORM;
     }
 
-    // 아이디 중복 유효성 검사
+    // 아이디 중복 검사
     Member findMember = memberService.findMember(memberForm.getUsername());
     if(findMember != null)
     {
@@ -54,6 +55,22 @@ public class MemberController
 
     memberService.createMember(memberForm);
     return "/index";
+  }
+
+  @PostMapping("/checkUsername")
+  public String checkUsername(MemberForm memberForm, Model model)
+  {
+    Member findMember = memberService.findMember(memberForm.getUsername());
+    if(findMember != null)
+    {
+      model.addAttribute("isValid", false);
+    }
+    else
+    {
+      model.addAttribute("isValid", true);
+    }
+
+    return "/member/join";
   }
 
   @GetMapping("/login")

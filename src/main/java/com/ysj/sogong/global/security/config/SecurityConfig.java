@@ -32,7 +32,7 @@ public class SecurityConfig
             .requestMatchers("/.well-known/**").permitAll() // Chrome DevTools 경로 허용
             .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/gen/**", "/member/profile/img/**").permitAll() // 정적 리소스 허용
             .requestMatchers("/error", "/h2-console/**").permitAll() // 기타 경로 허용
-            .requestMatchers("/member/join", "/member/login", "/").permitAll()
+            .requestMatchers("/member/join", "/member/login", "/", "/member/checkUsername").permitAll()
             .anyRequest().authenticated())
         .formLogin(form -> form
             .loginPage("/member/login") // GET (security -> me)

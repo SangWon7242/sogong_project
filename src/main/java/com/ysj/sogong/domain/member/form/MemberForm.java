@@ -1,8 +1,8 @@
 package com.ysj.sogong.domain.member.form;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,12 +11,15 @@ import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 @Setter
 public class MemberForm
 {
-  @NotEmpty
+  @Size(min = 2, max = 30)
+  @NotEmpty(message = "아이디를 입력해주세요")
   private String username;
 
-  @NotEmpty
+  @Size(min = 4, max = 30)
+  @NotEmpty(message = "비밀번호를 입력해주세요")
   private String password;
 
-  @NotEmpty
+  @Size(min = 4, max = 30)
+  @NotEmpty(message = "확인 비밀번호를 입력해주세요")
   private String passwordConfirm;
 }
