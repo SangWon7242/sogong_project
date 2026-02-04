@@ -27,7 +27,7 @@ public class MemberController
   }
 
   @PostMapping("/join")
-  public String doJoin(@Valid MemberForm memberForm, BindingResult bindingResult, Model model)
+  public String doJoin(@Valid MemberForm memberForm, BindingResult bindingResult)
   {
     final String JOIN_FORM = "/member/join";
 
@@ -54,7 +54,7 @@ public class MemberController
     }
 
     memberService.createMember(memberForm);
-    return "/index";
+    return "redirect:/";
   }
 
   @PostMapping("/checkUsername")

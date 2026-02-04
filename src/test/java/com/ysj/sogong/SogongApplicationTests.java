@@ -1,30 +1,98 @@
 package com.ysj.sogong;
 
+import com.ysj.sogong.domain.member.controller.MemberController;
 import com.ysj.sogong.domain.member.entity.Member;
-import com.ysj.sogong.domain.member.repository.MemberRepository;
+import com.ysj.sogong.domain.member.service.MemberService;
+import jakarta.transaction.Transactional;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.io.IOException;
 
+@AutoConfigureMockMvc
+@Transactional
+@ActiveProfiles("test")
 @SpringBootTest
-class SogongApplicationTests {
+class SogongApplicationTests
+{
+	@Autowired
+	private MockMvc mvc;
 
 	@Autowired
-	private MemberRepository memberRepository;
+	private MemberService memberService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Test
-	void contextLoads() {
+	@DisplayName("join test")
+	@Rollback(value = false)
+	void t1() throws Exception
+	{
+		// get
+		System.out.println("\n--- get ---");
+		mvc.perform(get("/member/join")
+						.with(csrf()))
+				.andDo(print())
+				.andExpect(status().is2xxSuccessful());
+
+		// post
+		System.out.println("\n--- post ---");
+		String username = "test_user";
+		String password = "1234";
+
+		ResultActions resultActions = mvc.perform(post("/member/join")
+				.param("username", username)
+				.param("password", password)
+				.param("passwordConfirm", password)
+				.characterEncoding("UTF-8")
+				.with(csrf())
+		).andDo(print());
+
+		resultActions
+				.andExpect(status().is3xxRedirection())
+				.andExpect(redirectedUrl("/"))
+				.andExpect(handler().handlerType(MemberController.class))
+				.andExpect(handler().methodName("doJoin"));
+
+		// post(아이디 중복 확인)
+		System.out.println("\n--- checkUsername ---");
+		mvc.perform(post("/member/checkUsername")
+						.param("username", username)
+						.characterEncoding("UTF-8")
+						.with(csrf()))
+				.andDo(print())
+				.andExpect(handler().handlerType(MemberController.class))
+				.andExpect(handler().methodName("checkUsername"));
+
+		// DB
+		Member member = memberService.findMember(username);
+		assertThat(member).isNotNull();
+		assertThat(member.getId()).isEqualTo(4);
+		assertThat(member.getUsername()).isEqualTo(username);
+		assertThat(true).isEqualTo(passwordEncoder.matches(password, member.getPassword()));
 	}
 
 	@Test
 	@DisplayName("JSoup test")
-	void t1()
+	void t2()
 	{
 		String url = "https://www.sogang.ac.kr/ko/story/notification-general";
 
@@ -47,3 +115,5 @@ class SogongApplicationTests {
 		}
 	}
 }
+
+
