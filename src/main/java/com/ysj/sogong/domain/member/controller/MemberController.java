@@ -3,6 +3,8 @@ package com.ysj.sogong.domain.member.controller;
 import com.ysj.sogong.domain.member.entity.Member;
 import com.ysj.sogong.domain.member.form.MemberForm;
 import com.ysj.sogong.domain.member.service.MemberService;
+import com.ysj.sogong.global.request.Rq;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,14 +29,32 @@ public class MemberController
   }
 
   @PostMapping("/join")
-  public String doJoin(@Valid MemberForm memberForm, BindingResult bindingResult)
+  public String doJoin(@Valid MemberForm memberForm,
+                       BindingResult bindingResult,
+                       Model model,
+                       HttpServletResponse resp)
   {
     final String JOIN_FORM = "/member/join";
+
+    if(memberForm.isCheckUsername())
+    {
+      // 중복 확인 버튼 전용 아이디 중복 검사
+      Member findMember = memberService.findMember(memberForm.getUsername());
+      if(findMember != null)
+      {
+        model.addAttribute("isValid", false);
+      }
+      else
+      {
+        model.addAttribute("isValid", true);
+      }
+
+      return JOIN_FORM;
+    }
 
     // 값 입력 유무, 값의 길이 등의 유효성 검사
     if(bindingResult.hasErrors())
     {
-      // 모델 이용
       return JOIN_FORM;
     }
 
@@ -53,24 +73,14 @@ public class MemberController
       return JOIN_FORM;
     }
 
+    // 회원가입
     memberService.createMember(memberForm);
-    return "redirect:/";
-  }
-
-  @PostMapping("/checkUsername")
-  public String checkUsername(MemberForm memberForm, Model model)
-  {
-    Member findMember = memberService.findMember(memberForm.getUsername());
-    if(findMember != null)
-    {
-      model.addAttribute("isValid", false);
-    }
-    else
-    {
-      model.addAttribute("isValid", true);
-    }
-
-    return "/member/join";
+    
+    // 회원가입 후 처리과정
+    Rq rq = new Rq(resp);
+    rq.printAlert(memberForm.getUsername() + "님 회원가입 성공!");
+    rq.replace("/member/login");
+    return null;
   }
 
   @GetMapping("/login")

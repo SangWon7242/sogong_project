@@ -22,4 +22,6 @@ public class MemberForm
   @Size(min = 4, max = 30)
   @NotEmpty(message = "확인 비밀번호를 입력해주세요")
   private String passwordConfirm;
+
+  private boolean checkUsername;
 }

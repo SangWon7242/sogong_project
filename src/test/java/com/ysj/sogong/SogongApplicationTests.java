@@ -67,20 +67,9 @@ class SogongApplicationTests
 		).andDo(print());
 
 		resultActions
-				.andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/"))
+				.andExpect(status().is2xxSuccessful())
 				.andExpect(handler().handlerType(MemberController.class))
 				.andExpect(handler().methodName("doJoin"));
-
-		// post(아이디 중복 확인)
-		System.out.println("\n--- checkUsername ---");
-		mvc.perform(post("/member/checkUsername")
-						.param("username", username)
-						.characterEncoding("UTF-8")
-						.with(csrf()))
-				.andDo(print())
-				.andExpect(handler().handlerType(MemberController.class))
-				.andExpect(handler().methodName("checkUsername"));
 
 		// DB
 		Member member = memberService.findMember(username);

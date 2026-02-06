@@ -3,10 +3,9 @@
         <section layout:fragment="content">
             <h1>join</h1>
 
-            <!-- 메인 폼 -->
             <form th:action="@{/member/join}"
                   method="post"
-                  onsubmit="checkForm(this); return false;"
+                  id="joinForm"
                   th:object="${memberForm}"
                   class="flex flex-col gap-2">
                 <div class="flex flex-col">
@@ -15,20 +14,28 @@
                         <input type="text"
                                th:field="*{username}"
                                placeholder="아아디"
-                               oninput="document.getElementById('checkUsername').value = this.value"
                                class="input"/>
 
                         <!-- 아이디 중복 확인용 -->
-                        <button type="submit" form="checkUsernameForm" class="btn ml-2 mr-2">중복 확인</button>
+                        <button type="button" onclick="checkForm('true')" class="btn ml-2 mr-2">
+                            중복 확인
+                        </button>
                         <div th:if="${isValid != null}">
                             <div th:if="${isValid}"
-                                 class="flex items-center justify-center bg-[#00aa0055] border h-10 w-16">가능</div>
+                                 class="flex items-center justify-center bg-[#00aa0055] border h-10 w-16">
+                                가능
+                            </div>
                             <div th:unless="${isValid}"
-                                 class="flex items-center justify-center bg-[#aa000055] border h-10 w-16">불가능</div>
+                                 class="flex items-center justify-center bg-[#aa000055] border h-10 w-16">
+                                불가능
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div th:replace="~{error/error :: username}"></div>
+                <div th:if="${isValid == null}">
+                    <div th:replace="~{error/error :: username}"></div>
+                </div>
+
                 <div class="flex flex-col">
                     <label for="password">비밀번호</label>
                     <input type="password"
@@ -36,7 +43,10 @@
                            placeholder="비밀번호"
                            class="input"/>
                 </div>
-                <div th:replace="~{error/error :: password}"></div>
+                <div th:if="${isValid == null}">
+                    <div th:replace="~{error/error :: password}"></div>
+                </div>
+
                 <div class="flex flex-col">
                     <label for="passwordConfirm">비밀번호 확인</label>
                     <input type="password"
@@ -44,34 +54,37 @@
                            placeholder="비밀번호 확인"
                            class="input"/>
                 </div>
-                <div th:replace="~{error/error :: passwordConfirm}"></div>
+                <div th:if="${isValid == null}">
+                    <div th:replace="~{error/error :: passwordConfirm}"></div>
+                </div>
+
+                <input hidden type="text" th:field="*{checkUsername}">
                 <div>
-                    <button type="submit" class="btn">제출</button>
+                    <button type="button" onclick="checkForm('false')" class="btn">제출</button>
                 </div>
             </form>
 
-            <!-- 아이디 중복 확인용 폼 -->
-            <form th:action="@{/member/checkUsername}"
-                  method="post"
-                  id="checkUsernameForm"
-                  onsubmit="checkForm(this); return false;"
-                  th:object="${memberForm}">
-                <input hidden
-                       type="text"
-                       name="username"
-                       id="checkUsername"
-                       th:value="*{username}"
-                       oninput="document.getElementById('username').value = this.value">
-            </form>
-
             <script>
-                function checkForm(form)
+                // 뒤로가기로 페이지 접근 방지
+                window.onpageshow = function(event) {
+                    if (event.persisted || (window.performance && window.performance.navigation.type === 2))
+                    {
+                        location.replace('/');
+                    }
+                };
+
+                function checkForm(bool)
                 {
+                    // checkUsername 필드값 결정
+                    document.getElementById('checkUsername').value = bool;
+                    const form = document.getElementById('joinForm');
+
                     // 공백 처리
                     form.username.value = form.username.value.trim();
                     form.password.value = form.password.value.trim();
                     form.passwordConfirm.value = form.passwordConfirm.value.trim();
 
+                    // 폼 제출
                     form.submit();
                 }
             </script>
