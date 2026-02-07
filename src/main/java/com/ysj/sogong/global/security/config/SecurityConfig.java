@@ -27,12 +27,13 @@ public class SecurityConfig
         .csrf(csrf -> csrf
             .ignoringRequestMatchers("/h2-console/**")) // h2 콘솔 scrf 제외
         .headers(headers -> headers
-            .frameOptions(frame -> frame.sameOrigin())) // h2 콘솔 iFrame 허용
+            .frameOptions(frame -> frame.sameOrigin()) // h2 콘솔 iFrame 허용
+            .cacheControl(cache -> cache.disable())) // 폼 제출 후 뒤로가기 방지
         .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
             .requestMatchers("/.well-known/**").permitAll() // Chrome DevTools 경로 허용
             .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/gen/**", "/member/profile/img/**").permitAll() // 정적 리소스 허용
             .requestMatchers("/error", "/h2-console/**").permitAll() // 기타 경로 허용
-            .requestMatchers("/member/join", "/member/login", "/").permitAll()
+            .requestMatchers("/member/join", "/member/login", "/", "/member/checkUsername").permitAll()
             .anyRequest().authenticated())
         .formLogin(form -> form
             .loginPage("/member/login") // GET (security -> me)

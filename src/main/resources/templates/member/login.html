@@ -1,36 +1,37 @@
 <html layout:decorate="~{layout/layout.html}">
   <body>
     <section layout:fragment="content">
-      <div><h1>login</h1></div>
+      <h1>login</h1>
 
       <form
+        th:action="@{/member/login}"
+        method="post"
         onsubmit="
-          loginSubmitCheckForm(this);
+          checkForm(this);
           return false;
         "
         class="flex flex-col gap-2"
-        th:action="@{/member/login}"
-        method="post"
       >
         <div class="flex flex-col">
           <label for="username">아이디</label>
           <input
-            class="input"
             type="text"
-            placeholder="아이디"
             name="username"
+            id="username"
+            placeholder="아이디"
+            class="input"
           />
         </div>
         <div class="flex flex-col">
           <label for="password">비밀번호</label>
           <input
-            class="input"
             type="password"
-            placeholder="비밀번호"
             name="password"
+            id="password"
+            placeholder="비밀번호"
+            class="input"
           />
         </div>
-
         <div>
           <button type="submit" class="btn">로그인</button>
         </div>
@@ -39,19 +40,34 @@
       <a href="/oauth2/authorization/kakao" class="btn">카카오 로그인</a>
 
       <script>
-        function loginSubmitCheckForm(form) {
-          const username = form.username.value;
-          const password = form.password.value;
+        // 뒤로가기로 페이지 접근 방지
+        window.onpageshow = function (event) {
+          if (
+            event.persisted ||
+            (window.performance && window.performance.navigation.type === 2)
+          ) {
+            location.replace("/");
+          }
+        };
 
-          if (username === "") {
+        function checkForm(form) {
+          // 아이디 확인
+          form.username.value = form.username.value.trim();
+          const username = form.username;
+
+          if (username.value === "") {
             alert("아이디를 입력해주세요.");
-            form.username.focus();
+            username.focus();
             return;
           }
 
-          if (password === "") {
+          // 비밀번호 확인
+          form.password.value = form.password.value.trim();
+          const password = form.password;
+
+          if (password.value === "") {
             alert("비밀번호를 입력해주세요.");
-            form.password.focus();
+            password.focus();
             return;
           }
 

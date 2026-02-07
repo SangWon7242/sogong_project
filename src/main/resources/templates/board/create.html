@@ -4,21 +4,27 @@
       <h1>board create</h1>
 
       <form
+        th:action="@{/board/create}"
+        method="post"
         onsubmit="
-          boardCreateSubmitCheckForm(this);
+          checkForm(this);
           return false;
         "
         class="flex flex-col gap-2"
-        th:action="@{/board/create}"
-        method="post"
       >
         <div class="flex flex-col">
           <label for="title">게시판 이름</label>
-          <input class="input" type="text" placeholder="제목" name="title" />
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="게시판 이름"
+            class="input"
+          />
         </div>
         <div class="flex flex-col">
           <label for="boardClassId">게시판 종류</label>
-          <select name="boardClassId" class="select">
+          <select name="boardClassId" id="boardClassId" class="select">
             <option value disabled selected>게시판 종류를 선택해주세요.</option>
             <option
               th:each="boardClass : ${boardClasses}"
@@ -27,26 +33,30 @@
             ></option>
           </select>
         </div>
-
         <div>
           <button type="submit" class="btn">제출</button>
         </div>
       </form>
 
       <script>
-        function boardCreateSubmitCheckForm(form) {
-          const title = form.title.value;
-          const boardClassId = form.boardClassId.value;
+        function checkForm(form) {
+          // 게시판 이름 확인
+          form.title.value = form.title.value.trim();
+          const title = form.title;
 
-          if (title === "") {
+          if (title.value === "") {
             alert("게시판 이름을 입력해주세요.");
-            form.title.focus();
+            title.focus();
             return;
           }
 
-          if (boardClassId === "") {
+          // 게시판 종류 확인
+          form.boardClassId.value = form.boardClassId.value.trim();
+          const boardClassId = form.boardClassId;
+
+          if (boardClassId.value === "") {
             alert("게시판 종류를 선택해주세요.");
-            form.boardClassId.focus();
+            boardClassId.focus();
             return;
           }
 
